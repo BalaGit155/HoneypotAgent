@@ -202,7 +202,7 @@ async def message_event(req: MessageEvent) -> MinimalMessageResponse:
             "extractedIntelligence": intel,
             "evidenceStrength": evidence_strength,
             "confidenceScore": confidence_score,
-            "metadata": req.metadata or {},
+            "metadata": req.metadata.model_dump() if hasattr(req.metadata, "model_dump") else req.metadata.dict() if hasattr(req.metadata, "dict") else {},
         },
         "$setOnInsert": {
             "createdAt": now,
