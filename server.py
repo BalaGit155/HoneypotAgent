@@ -70,11 +70,17 @@ class ConversationItem(BaseModel):
     timestamp: str
 
 
+class Metadata(BaseModel):
+    channel: str = "SMS"
+    language: str = "English"
+    locale: str = "IN"
+
+
 class MessageEvent(BaseModel):
     sessionId: str = Field(..., min_length=1)
     message: IncomingMessage
     conversationHistory: List[ConversationItem] = Field(default_factory=list)
-    metadata: Optional[Dict[str, Any]] = None
+    metadata: Metadata = Field(default_factory=Metadata)
 
 
 class MinimalMessageResponse(BaseModel):
